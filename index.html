@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>情人节像素卡片</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap');
+
+:root{
+  --pink-bg:#FFE0EC;
+  --pink-bg2:#FFC9DD;
+  --pink-dark:#E45A8B;
+  --pink-darker:#C73E6E;
+  --pink-mid:#F48FBF;
+  --pink-light:#FFD4E8;
+  --ink:#6B2D5C;
+  --ink-soft:#9B6B8B;
+  --white:#FFF8FB;
+  --win-gray:#E8E8E8;
+  --win-blue:#7B9CC9;
+  --win-blue-dark:#5A7BA8;
+  --win-title:#6A8FCC;
+  --pixel-shadow:3px 3px 0 rgba(199,62,110,.35);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:"ZCOOL KuaiLe","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  background:linear-gradient(180deg,var(--pink-bg) 0%,var(--pink-bg2) 100%);
+  color:var(--ink);
+  overflow:hidden;
+  image-rendering:pixelated;
+  -webkit-font-smoothing:none;
+}
+
+/* 像素格子背景纹理 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(228,90,139,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(228,90,139,.05) 1px,transparent 1px);
+  background-size:12px 12px;
+}
+
+/* 像素花朵/爱心装饰 */
+.deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.deco span{position:absolute;font-size:14px;opacity:.45;animation:floatUp linear infinite;}
+@keyframes floatUp{
+  0%{transform:translateY(100vh) rotate(0);opacity:0;}
+  10%{opacity:.5;}
+  90%{opacity:.3;}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}
+}
+
+.screen{
+  position:relative;z-index:1;height:100%;width:100%;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  padding:20px 16px;text-align:center;
+}
+.card{
+  background:var(--white);
+  border:4px solid var(--pink-dark);
+  border-radius:0;
+  padding:28px 22px;
+  box-shadow:var(--pixel-shadow);
+  width:100%;max-width:380px;
+  position:relative;
+  animation:popIn .4s steps(4) both;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:none;}}
+
+/* 像素画框 */
+.pixel-frame{
+  width:180px;height:140px;margin:0 auto 16px;
+  border:4px solid var(--pink-dark);
+  background:linear-gradient(135deg,#FFF5F8,#FFE0EC);
+  display:flex;align-items:center;justify-content:center;
+  font-size:60px;position:relative;
+  box-shadow:var(--pixel-shadow);
+}
+.pixel-frame::before,.pixel-frame::after{
+  content:"✿";position:absolute;font-size:16px;color:var(--pink-mid);
+}
+.pixel-frame::before{top:-10px;left:-10px;}
+.pixel-frame::after{bottom:-10px;right:-10px;}
+
+.title{font-size:22px;font-weight:bold;color:var(--pink-darker);line-height:1.5;margin-bottom:4px;}
+.subtitle{font-size:14px;color:var(--ink-soft);margin-top:6px;}
+
+/* 像素按钮 */
+.pbtn{
+  display:inline-flex;align-items:center;justify-content:center;gap:4px;
+  border:3px solid var(--pink-darker);
+  background:var(--pink-dark);color:var(--white);
+  font-family:inherit;font-size:18px;font-weight:bold;
+  padding:12px 32px;cursor:pointer;
+  box-shadow:var(--pixel-shadow);
+  border-radius:0;
+  transition:transform .1s steps(2),box-shadow .1s;
+  image-rendering:pixelated;
+}
+.pbtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(199,62,110,.35);}
+.pbtn-yes{font-family:"Press Start 2P",monospace;font-size:20px;padding:16px 44px;}
+.pbtn-no{
+  background:var(--pink-light);color:var(--pink-darker);
+  font-size:14px;padding:8px 18px;
+  position:relative;
+  transition:left .25s ease,top .25s ease;
+}
+.pbtn-no.evading{position:fixed;z-index:999;}
+.btn-wrap{margin-top:20px;display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap;min-height:56px;}
+.no-hint{font-size:12px;color:var(--pink-mid);margin-top:10px;min-height:18px;}
+
+/* 活动选择网格 */
+.act-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px;}
+.act-opt{
+  border:3px solid var(--pink-light);background:var(--white);
+  border-radius:0;padding:14px 10px;cursor:pointer;
+  display:flex;align-items:center;gap:8px;transition:all .15s;
+  box-shadow:2px 2px 0 rgba(228,90,139,.15);
+}
+.act-opt.sel{border-color:var(--pink-darker);background:var(--pink-light);box-shadow:var(--pixel-shadow);}
+.act-opt .ico{font-size:22px;}
+.act-opt .nm{font-size:15px;color:var(--ink);font-weight:bold;}
+.act-opt.sel .nm{color:var(--pink-darker);}
+.act-opt.sel .ico{transform:scale(1.2);}
+
+.lock-btn{border:3px solid #C9B0C0;background:#E8DCE5;color:#9B8090;box-shadow:none;cursor:not-allowed;}
+.lock-btn .lock-icon{margin-left:4px;}
+
+/* 日期输入 */
+.date-wrap{position:relative;}
+.date-input{
+  border:3px solid var(--pink-darker);background:var(--white);
+  padding:10px 14px;margin:16px auto 0;width:100%;max-width:260px;
+  display:flex;align-items:center;gap:8px;
+}
+.date-input input{border:none;outline:none;font-size:16px;color:var(--pink-darker);width:100%;background:transparent;font-family:inherit;}
+.cal{
+  position:absolute;left:0;right:0;top:calc(100% + 6px);
+  background:var(--white);border:3px solid var(--pink-darker);
+  box-shadow:var(--pixel-shadow);padding:12px;z-index:5;
+}
+.cal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.cal-hd b{font-size:14px;color:var(--pink-darker);}
+.cal-arrow{width:26px;height:26px;border:2px solid var(--pink-mid);background:var(--pink-light);color:var(--pink-darker);font-size:14px;cursor:pointer;border-radius:0;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;}
+.cal-grid span{font-size:11px;color:var(--ink-soft);padding:4px 0;}
+.cal-grid button{border:none;background:none;font-size:13px;padding:6px 0;cursor:pointer;color:var(--ink);font-family:inherit;border-radius:0;}
+.cal-grid button.today{color:var(--pink-darker);font-weight:bold;}
+.cal-grid button.pick{background:var(--pink-dark);color:#fff;font-weight:bold;}
+
+/* 复古窗口情书 */
+.win95{
+  background:#DFDFDF;
+  border:3px solid var(--win-blue-dark);
+  box-shadow:var(--pixel-shadow);
+  width:100%;max-width:380px;
+  margin:0 auto;
+}
+.win95-title{
+  background:linear-gradient(90deg,var(--win-title),var(--win-blue));
+  color:#fff;padding:6px 10px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:14px;font-weight:bold;
+}
+.win95-title .heart{margin-right:6px;}
+.win95-close{
+  width:20px;height:20px;background:#E0444B;border:1px solid #fff;
+  color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border-radius:0;
+}
+.win95-body{
+  background:#fff;padding:20px 18px;
+  font-size:15px;line-height:2;color:#3A2A3A;text-align:left;
+  min-height:200px;
+}
+.win95-body p{margin-bottom:14px;}
+.win95-body b{font-size:17px;color:var(--pink-darker);}
+.win95-sign{text-align:right;margin-top:10px;font-style:italic;}
+.win95-body .cursor{display:inline-block;width:10px;height:16px;background:var(--pink-darker);animation:blink 1s steps(2) infinite;vertical-align:text-bottom;}
+@keyframes blink{50%{opacity:0;}}
+
+.pbtn-send{width:100%;margin-top:16px;}
+.send-status{margin-top:12px;font-size:14px;line-height:1.6;}
+.send-ok{color:#2E7D5B;font-weight:bold;}
+.send-fail{color:#C44;}
+.send-fail a{color:#C44;font-weight:bold;word-break:break-all;}
+
+.replay{display:block;margin:16px auto 0;font-size:13px;color:var(--pink-mid);border:none;background:none;cursor:pointer;text-decoration:underline;}
+
+/* 成功页大字 */
+.yay{font-size:40px;font-weight:bold;color:var(--pink-darker);margin:10px 0;}
+.yay::before,.yay::after{content:"❀";font-size:16px;color:var(--pink-mid);margin:0 8px;vertical-align:middle;}
+
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden;}
+.confetti i{position:absolute;top:-10px;width:10px;height:16px;animation:confFall linear forwards;}
+@keyframes confFall{0%{transform:translateY(-10vh) rotate(0);opacity:1;}100%{transform:translateY(108vh) rotate(720deg);opacity:0;}}
+</style>
+</head>
+<body>
+<div class="deco" id="deco"></div>
+
+<!-- 1 邀请页 -->
+<section class="screen" id="s1">
+  <div class="card">
+    <div class="pixel-frame">🐱</div>
+    <h1 class="title">你愿意跟我出去吗？</h1>
+    <div class="btn-wrap">
+      <button class="pbtn pbtn-yes" id="yesBtn">YES</button>
+      <button class="pbtn pbtn-no" id="noBtn">No</button>
+    </div>
+    <p class="no-hint" id="noHint">你确定吗？</p>
+  </div>
+</section>
+
+<!-- 2 成功页 -->
+<section class="screen" id="s2" style="display:none">
+  <div class="card">
+    <div class="pixel-frame">💕</div>
+    <div class="yay">耶！</div>
+    <p class="title" style="font-size:18px">你答应我，我真的好开心。</p>
+    <div class="btn-wrap">
+      <button class="pbtn" id="continue1">按一下继续 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- 3 选活动 -->
+<section class="screen" id="s3" style="display:none">
+  <div class="card">
+    <div class="pixel-frame">🎮</div>
+    <h1 class="title">你想一起做什么？</h1>
+    <p class="subtitle">选一个你想和我一起做的</p>
+    <div class="act-grid" id="actGrid"></div>
+    <div class="btn-wrap">
+      <button class="pbtn lock-btn" id="actConfirm">
+        就决定是这个了 <span class="lock-icon">🔒</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- 4 选日期 -->
+<section class="screen" id="s4" style="display:none">
+  <div class="card">
+    <div class="pixel-frame">📅</div>
+    <h1 class="title">挑一天约会吧</h1>
+    <p class="subtitle">选一天，安排我们的小小约会吧。</p>
+    <div class="date-wrap">
+      <div class="date-input">
+        <input id="dateField" type="text" placeholder="MM/DD/YYYY" readonly>
+        <span id="calIcon" style="font-size:18px;cursor:pointer;">📅</span>
+      </div>
+      <div class="cal" id="cal" style="display:none">
+        <div class="cal-hd"><button class="cal-arrow" id="calPrev">‹</button><b id="calTitle">2026-08</b><button class="cal-arrow" id="calNext">›</button></div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+    </div>
+    <div class="btn-wrap">
+      <button class="pbtn lock-btn" id="dateConfirm">继续 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- 5 情书页 + 发送 -->
+<section class="screen" id="s5" style="display:none">
+  <div class="win95">
+    <div class="win95-title">
+      <span><span class="heart">❤</span> 情书.txt</span>
+      <span class="win95-close" id="winClose">×</span>
+    </div>
+    <div class="win95-body">
+      <p>不管怎样，你都真的很可爱。</p>
+      <p>不要让任何人告诉你不是，好吗？</p>
+      <p>有你在，每个平凡的日子都变得特别。</p>
+      <p>今天，以及每一天，我都想庆祝有你、有我们。</p>
+      <p class="win95-sign">亲亲，<br>你的他 ❤</p>
+    </div>
+  </div>
+  <button class="pbtn pbtn-send" id="sendBtn">就这样约了！💌</button>
+  <div class="send-status" id="sendStatus"></div>
+  <button class="replay" id="replayBtn">再看一次</button>
+</section>
+
+<script>
+(function(){
+  var RECEIVE_EMAIL='7272468571@qq.com';
+  var FORM_ENDPOINT='https://formsubmit.co/ajax/'+RECEIVE_EMAIL;
+
+  var acts=[
+    {nm:'吃饭约',ico:'🍽️'},{nm:'看电影',ico:'🎬'},{nm:'咖啡散步',ico:'☕'},
+    {nm:'野餐',ico:'🧺'},{nm:'迷你高尔夫',ico:'⛳'},{nm:'给你决定',ico:'🎁'}
+  ];
+  var actSel='',dateSel='';
+  var calY=new Date().getFullYear(),calM=new Date().getMonth();
+  var noCount=0;
+  var noHints=['你确定吗？','宝贝拜托 :C','还是选好啦！','不要这样啦','我要哭了……'];
+
+  function $(s){return document.querySelector(s);}
+  function show(id){
+    ['s1','s2','s3','s4','s5'].forEach(function(x){
+      document.getElementById(x).style.display=(x===id?'flex':'none');
+    });
+  }
+
+  /* 装饰飘落 */
+  (function(){
+    var box=document.getElementById('deco');
+    var icons=['💕','🌸','✿','💗','🐾','❀'];
+    for(var i=0;i<12;i++){
+      var s=document.createElement('span');
+      s.textContent=icons[Math.floor(Math.random()*icons.length)];
+      s.style.cssText='left:'+(Math.random()*100)+'%;animation-duration:'+(8+Math.random()*8)+'s;animation-delay:'+(Math.random()*10)+'s;font-size:'+(10+Math.random()*8)+'px;';
+      box.appendChild(s);
+    }
+  })();
+
+  function confetti(){
+    var c=document.createElement('div');c.className='confetti';
+    var colors=['#E45A8B','#F48FBF','#FFD166','#8FD694','#BFA6CC'];
+    for(var i=0;i<36;i++){
+      var e=document.createElement('i');
+      e.style.cssText='left:'+(Math.random()*100)+'%;background:'+colors[Math.floor(Math.random()*colors.length)]+';animation-duration:'+(2+Math.random()*2.5)+'s;animation-delay:'+(Math.random()*.6)+'s;';
+      c.appendChild(e);
+    }
+    document.body.appendChild(c);
+    setTimeout(function(){c.remove();},5000);
+  }
+
+  /* ---- 1 邀请页 ---- */
+  document.getElementById('yesBtn').onclick=function(){confetti();show('s2');};
+
+  var noBtn=document.getElementById('noBtn');
+  var noHint=document.getElementById('noHint');
+  noBtn.addEventListener('pointerover',function(e){if(e.pointerType!=='touch')noEvade();});
+  noBtn.addEventListener('touchstart',function(e){e.preventDefault();noEvade();},{passive:false});
+  noBtn.addEventListener('click',function(e){e.preventDefault();noEvade();});
+
+  function noEvade(){
+    noCount++;
+    var idx=noCount%noHints.length;
+    noHint.textContent=noHints[idx];
+    /* 第二次开始按钮满屏跑 */
+    if(noCount>=1){
+      noBtn.classList.add('evading');
+      var bw=noBtn.offsetWidth,bh=noBtn.offsetHeight;
+      var vw=window.innerWidth,vh=window.innerHeight;
+      noBtn.style.left=(Math.random()*(vw-bw-20))+'px';
+      noBtn.style.top=(Math.random()*(vh-bh-20))+'px';
+    }
+  }
+
+  /* ---- 2 成功页 ---- */
+  document.getElementById('continue1').onclick=function(){show('s3');};
+
+  /* ---- 3 选活动 ---- */
+  var actGrid=document.getElementById('actGrid');
+  var actConfirmBtn=document.getElementById('actConfirm');
+  acts.forEach(function(a){
+    var d=document.createElement('div');
+    d.className='act-opt';
+    d.innerHTML='<span class="ico">'+a.ico+'</span><span class="nm">'+a.nm+'</span>';
+    d.onclick=function(){
+      document.querySelectorAll('.act-opt').forEach(function(x){x.classList.remove('sel');});
+      d.classList.add('sel');
+      actSel=a.nm;
+      actConfirmBtn.classList.remove('lock-btn');
+      actConfirmBtn.classList.add('pbtn');
+      actConfirmBtn.innerHTML='就决定是这个了';
+      actConfirmBtn.disabled=false;
+    };
+    actGrid.appendChild(d);
+  });
+  actConfirmBtn.disabled=true;
+  actConfirmBtn.onclick=function(){if(actSel){show('s4');}};
+
+  /* ---- 4 选日期 ---- */
+  var calBox=document.getElementById('cal');
+  document.getElementById('calIcon').onclick=function(){
+    calBox.style.display=(calBox.style.display==='block')?'none':'block';
+    renderCal();
+  };
+  document.getElementById('calPrev').onclick=function(){calM--;if(calM<0){calM=11;calY--;}renderCal();};
+  document.getElementById('calNext').onclick=function(){calM++;if(calM>11){calM=0;calY++;}renderCal();};
+
+  var week=['日','一','二','三','四','五','六'];
+  var dateConfirmBtn=document.getElementById('dateConfirm');
+  function renderCal(){
+    var y=calY,m=calM;
+    document.getElementById('calTitle').textContent=(y+'-'+String(m+1).padStart(2,'0'));
+    var first=new Date(y,m,1).getDay();
+    var days=new Date(y,m+1,0).getDate();
+    var g=document.getElementById('calGrid');g.innerHTML='';
+    week.forEach(function(w){var s=document.createElement('span');s.textContent=w;g.appendChild(s);});
+    for(var i=0;i<first;i++){var e=document.createElement('button');e.disabled=true;e.innerHTML='&nbsp;';g.appendChild(e);}
+    var today=new Date();
+    for(var d=1;d<=days;d++){
+      var b=document.createElement('button');b.textContent=d;
+      var key=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+      if(today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d){b.classList.add('today');}
+      if(dateSel===key){b.classList.add('pick');}
+      (function(dd,yy,mm){
+        b.onclick=function(){
+          dateSel=yy+'-'+String(mm+1).padStart(2,'0')+'-'+String(dd).padStart(2,'0');
+          document.getElementById('dateField').value=(mm+1)+'/'+dd+'/'+yy;
+          renderCal();calBox.style.display='none';
+          dateConfirmBtn.classList.remove('lock-btn');
+          dateConfirmBtn.classList.add('pbtn');
+          dateConfirmBtn.innerHTML='继续 →';
+          dateConfirmBtn.disabled=false;
+        };
+      })(d,y,m);
+      g.appendChild(b);
+    }
+  }
+  renderCal();
+  dateConfirmBtn.disabled=true;
+  dateConfirmBtn.onclick=function(){if(dateSel){show('s5');}};
+
+  /* ---- 5 发送 ---- */
+  var sendBtn=document.getElementById('sendBtn');
+  var sendStatus=document.getElementById('sendStatus');
+  sendBtn.onclick=function(){
+    var txt='我想和你'+actSel+'，约在 '+dateSel+' 见面吧！';
+    sendBtn.disabled=true;sendBtn.textContent='发送中…';
+    sendStatus.className='send-status';sendStatus.textContent='';
+    var payload={
+      _subject:'【情人节】她选好了：'+actSel+' @ '+dateSel,
+      _captcha:'false',
+      activity:actSel,
+      date:dateSel,
+      message:txt
+    };
+    fetch(FORM_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(payload)
+    }).then(function(r){return r.json();}).then(function(){
+      sendStatus.className='send-status send-ok';
+      sendStatus.innerHTML='💌 已送出，等你查收！到时候见 ❤';
+      sendBtn.style.display='none';confetti();
+    }).catch(function(){
+      sendStatus.className='send-status send-fail';
+      var mailto='mailto:'+RECEIVE_EMAIL+'?subject='+encodeURIComponent('【待确认】她想约'+actSel)+'&body='+encodeURIComponent(txt);
+      sendStatus.innerHTML='没发送成功，也可以点这里用邮箱发给我 👉 <a href="'+mailto+'">点此发送</a>';
+      sendBtn.disabled=false;sendBtn.textContent='再试一次 💌';
+    });
+  };
+
+  /* 情书窗口关闭按钮 = 再看一次效果 */
+  document.getElementById('winClose').onclick=function(){
+    document.querySelector('.win95-body').scrollTop=0;
+  };
+
+  /* 再看一次 */
+  document.getElementById('replayBtn').onclick=function(){
+    actSel='';dateSel='';
+    document.querySelectorAll('.act-opt').forEach(function(x){x.classList.remove('sel');});
+    document.getElementById('dateField').value='';
+    actConfirmBtn.classList.add('lock-btn');actConfirmBtn.classList.remove('pbtn');
+    actConfirmBtn.innerHTML='就决定是这个了 <span class="lock-icon">🔒</span>';actConfirmBtn.disabled=true;
+    dateConfirmBtn.classList.add('lock-btn');dateConfirmBtn.classList.remove('pbtn');
+    dateConfirmBtn.innerHTML='继续 →';dateConfirmBtn.disabled=true;
+    sendStatus.className='send-status';sendStatus.innerHTML='';
+    sendBtn.disabled=false;sendBtn.style.display='';sendBtn.textContent='就这样约了！💌';
+    noBtn.classList.remove('evading');noBtn.style.left='';noBtn.style.top='';noBtn.textContent='No';
+    noHint.textContent='你确定吗？';noCount=0;
+    show('s1');
+  };
+})();
+</script>
+</body>
+</html>
