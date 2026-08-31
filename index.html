@@ -8,20 +8,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap');
 
 :root{
-  --pink-bg:#FFE0EC;
-  --pink-bg2:#FFC9DD;
-  --pink-dark:#E45A8B;
-  --pink-darker:#C73E6E;
-  --pink-mid:#F48FBF;
-  --pink-light:#FFD4E8;
-  --ink:#6B2D5C;
-  --ink-soft:#9B6B8B;
-  --white:#FFF8FB;
-  --win-gray:#E8E8E8;
-  --win-blue:#7B9CC9;
-  --win-blue-dark:#5A7BA8;
-  --win-title:#6A8FCC;
-  --pixel-shadow:3px 3px 0 rgba(199,62,110,.35);
+  --pink-bg:#FFF1F6;
+  --pink-bg2:#FFD4E9;
+  --pink-dark:#FF6FA5;
+  --pink-darker:#F43E8C;
+  --pink-mid:#FF9EC8;
+  --pink-light:#FFD2E4;
+  --ink:#7A2E57;
+  --ink-soft:#C48BA6;
+  --white:#FFF9FB;
+  --win-gray:#F6EAF1;
+  --win-blue:#FF7DB0;
+  --win-blue-dark:#E86FA0;
+  --win-title:#FF5E9E;
+  --pixel-shadow:3px 3px 0 rgba(244,62,140,.18);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -38,10 +38,7 @@ body{
 /* 像素格子背景纹理 */
 body::before{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(228,90,139,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(228,90,139,.05) 1px,transparent 1px);
-  background-size:12px 12px;
+
 }
 
 /* 像素花朵/爱心装饰 */
@@ -71,20 +68,7 @@ body::before{
 }
 @keyframes popIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:none;}}
 
-/* 像素画框 */
-.pixel-frame{
-  width:180px;height:140px;margin:0 auto 16px;
-  border:4px solid var(--pink-dark);
-  background:linear-gradient(135deg,#FFF5F8,#FFE0EC);
-  display:flex;align-items:center;justify-content:center;
-  font-size:60px;position:relative;
-  box-shadow:var(--pixel-shadow);
-}
-.pixel-frame::before,.pixel-frame::after{
-  content:"✿";position:absolute;font-size:16px;color:var(--pink-mid);
-}
-.pixel-frame::before{top:-10px;left:-10px;}
-.pixel-frame::after{bottom:-10px;right:-10px;}
+
 
 .title{font-size:22px;font-weight:bold;color:var(--pink-darker);line-height:1.5;margin-bottom:4px;}
 .subtitle{font-size:14px;color:var(--ink-soft);margin-top:6px;}
@@ -101,7 +85,7 @@ body::before{
   transition:transform .1s steps(2),box-shadow .1s;
   image-rendering:pixelated;
 }
-.pbtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(199,62,110,.35);}
+
 .pbtn-yes{font-family:"Press Start 2P",monospace;transform:scale(1);transition:transform .25s ease;}
 .pbtn-no{
   background:var(--pink-light);color:var(--pink-darker);
@@ -115,19 +99,14 @@ body::before{
 
 /* 活动选择网格 */
 .act-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px;}
-.act-opt{
-  border:3px solid var(--pink-light);background:var(--white);
-  border-radius:0;padding:14px 10px;cursor:pointer;
-  display:flex;align-items:center;gap:8px;transition:all .15s;
-  box-shadow:2px 2px 0 rgba(228,90,139,.15);
-}
+
 .act-opt.sel{border-color:var(--pink-darker);background:var(--pink-light);box-shadow:var(--pixel-shadow);}
 .act-opt .ico{font-size:22px;}
 .act-opt .nm{font-size:15px;color:var(--ink);font-weight:bold;}
 .act-opt.sel .nm{color:var(--pink-darker);}
 .act-opt.sel .ico{transform:scale(1.2);}
 
-.lock-btn{border:3px solid #C9B0C0;background:#E8DCE5;color:#9B8090;box-shadow:none;cursor:not-allowed;}
+
 .lock-btn .lock-icon{margin-left:4px;}
 
 /* 日期输入 */
@@ -154,7 +133,7 @@ body::before{
 
 /* 复古窗口情书 */
 .win95{
-  background:#DFDFDF;
+  background:#F6EAF1;
   border:3px solid var(--win-blue-dark);
   box-shadow:var(--pixel-shadow);
   width:100%;max-width:380px;
@@ -172,11 +151,7 @@ body::before{
   color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;
   cursor:pointer;border-radius:0;
 }
-.win95-body{
-  background:#fff;padding:20px 18px;
-  font-size:15px;line-height:2;color:#3A2A3A;text-align:left;
-  min-height:200px;
-}
+
 .win95-body p{margin-bottom:14px;}
 .win95-body b{font-size:17px;color:var(--pink-darker);}
 .win95-sign{text-align:right;margin-top:10px;font-style:italic;}
@@ -206,20 +181,57 @@ body::before{
 <!-- 1 邀请页 -->
 <section class="screen" id="s1">
   <div class="card">
-    <div class="pixel-frame">🐱</div>
+    <div class="pixel-frame">
+      <svg class="anim-cat" width="110" height="110" viewBox="0 0 110 110">
+        <ellipse cx="55" cy="62" rx="46" ry="40" fill="#FFC94D"/>
+        <path d="M28 26 L14 10 L18 34 Z" fill="#FFC94D" stroke="#E8A63B" stroke-width="2"/>
+        <path d="M82 26 L96 10 L92 34 Z" fill="#FFC94D" stroke="#E8A63B" stroke-width="2"/>
+        <path d="M30 24 Q32 4 44 14 Q36 26 30 24Z" fill="#FFB43C"/>
+        <path d="M80 24 Q78 4 66 14 Q74 26 80 24Z" fill="#FFB43C"/>
+        <ellipse cx="40" cy="58" rx="8" ry="10" fill="#4A3B42"/>
+        <ellipse cx="70" cy="58" rx="8" ry="10" fill="#4A3B42"/>
+        <circle cx="42" cy="55" r="2.6" fill="#fff"/>
+        <circle cx="72" cy="55" r="2.6" fill="#fff"/>
+        <g class="eye-g">
+          <ellipse cx="40" cy="58" rx="8" ry="10" fill="#4A3B42"/>
+          <ellipse cx="70" cy="58" rx="8" ry="10" fill="#4A3B42"/>
+          <circle cx="42" cy="55" r="2.6" fill="#fff"/>
+          <circle cx="72" cy="55" r="2.6" fill="#fff"/>
+        </g>
+        <ellipse cx="55" cy="72" rx="7" ry="5" fill="#FF8EB5"/>
+        <path d="M40 82 Q55 98 70 82 Q55 92 40 82Z" fill="#C76A8F" stroke="#A8547A" stroke-width="2"/>
+        <g stroke="#B97B45" stroke-width="2" stroke-linecap="round">
+          <line x1="20" y1="62" x2="33" y2="60"/>
+          <line x1="20" y1="72" x2="33" y2="69"/>
+          <line x1="20" y1="82" x2="33" y2="77"/>
+          <line x1="90" y1="62" x2="77" y2="60"/>
+          <line x1="90" y1="72" x2="77" y2="69"/>
+          <line x1="90" y1="82" x2="77" y2="77"/>
+        </g>
+        <text x="105" y="16" font-size="15" class="anim-heart">❤</text>
+        <text x="6" y="40" font-size="11" class="anim-star">⭐</text>
+      </svg>
+    </div>
     <h1 class="title">你愿意跟我出去吗？</h1>
     <div class="btn-wrap">
       <button class="pbtn pbtn-yes" id="yesBtn">YES</button>
       <button class="pbtn pbtn-no" id="noBtn">No</button>
     </div>
-    <p class="no-hint" id="noHint">你确定吗？</p>
+<p class="no-hint" id="noHint">你确定吗？</p>
   </div>
 </section>
 
 <!-- 2 成功页 -->
 <section class="screen" id="s2" style="display:none">
   <div class="card">
-    <div class="pixel-frame">💕</div>
+    <div class="pixel-frame">
+      <svg class="anim-heart" width="88" height="88" viewBox="0 0 88 88">
+        <path d="M44 80 C44 80 6 54 6 30 C6 14 22 8 32 16 C40 22 43 26 44 32 C45 26 48 22 56 16 C66 8 82 14 82 30 C82 54 44 80 44 80Z" fill="#FF5E9E" stroke="#F43E8C" stroke-width="4"/>
+        <path d="M26 24 Q30 18 36 21" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="38" cy="42" r="4" fill="#fff"/>
+        <circle cx="50" cy="42" r="4" fill="#fff"/>
+      </svg>
+    </div>
     <div class="yay">耶！</div>
     <p class="title" style="font-size:18px">你答应我，我真的好开心。</p>
     <div class="btn-wrap">
@@ -231,7 +243,20 @@ body::before{
 <!-- 3 选活动 -->
 <section class="screen" id="s3" style="display:none">
   <div class="card">
-    <div class="pixel-frame">🎮</div>
+    <div class="pixel-frame">
+      <svg class="anim-cat" width="100" height="100" viewBox="0 0 100 100">
+        <ellipse cx="50" cy="58" rx="42" ry="36" fill="#FFC94D"/>
+        <path d="M25 26 L12 11 L16 13 Z" fill="#FFC94D" stroke="#E8A63B" stroke-width="2"/>
+        <path d="M75 26 L88 11 L84 13 Z" fill="#FFC94D" stroke="#E8A63B" stroke-width="2"/>
+        <ellipse cx="36" cy="54" rx="7" ry="9" fill="#4A3B42"/>
+        <ellipse cx="64" cy="54" rx="7" ry="9" fill="#4A3B42"/>
+        <circle cx="38" cy="51" r="2.4" fill="#fff"/>
+        <circle cx="66" cy="51" r="2.4" fill="#fff"/>
+        <ellipse cx="50" cy="66" rx="6" ry="4.5" fill="#FF8EB5"/>
+        <path d="M37 76 Q50 90 63 76 Q50 84 37 76Z" fill="#C76AB5" stroke="#A04070" stroke-width="2"/>
+        <text x="82" y="20" font-size="10" class="anim-heart">💗</text>
+      </svg>
+    </div>
     <h1 class="title">你想一起做什么？</h1>
     <p class="subtitle">选一个你想和我一起做的</p>
     <div class="act-grid" id="actGrid"></div>
@@ -246,7 +271,16 @@ body::before{
 <!-- 4 选日期 -->
 <section class="screen" id="s4" style="display:none">
   <div class="card">
-    <div class="pixel-frame">📅</div>
+    <div class="pixel-frame">
+      <svg class="anim-cal" width="92" height="92" viewBox="0 0 92 92">
+        <rect x="14" y="16" width="64" height="62" rx="6" fill="#FFC94D" stroke="#F4A93B" stroke-width="3"/>
+        <path d="M14 34 L78 34 L78 74 A6 6 0 0 1 72 80 L20 80 A6 6 0 0 1 14 74 Z" fill="#FFF4F8"/>
+        <rect x="24" y="8" width="6" height="18" rx="3" fill="#FF5E9E"/>
+        <rect x="62" y="8" width="6" height="18" rx="3" fill="#FF5E9E"/>
+        <text x="46" y="62" font-family="'ZCOOL KuaiLe',sans-serif" font-size="24" fill="#F43E8C" text-anchor="middle">14</text>
+        <circle cx="78" cy="16" r="5" fill="#FF5E9E" class="anim-heart"/>
+      </svg>
+    </div>
     <h1 class="title">挑一天约会吧</h1>
     <p class="subtitle">选一天，安排我们的小小约会吧。</p>
     <div class="date-wrap">
@@ -320,7 +354,7 @@ body::before{
 
   function confetti(){
     var c=document.createElement('div');c.className='confetti';
-    var colors=['#E45A8B','#F48FBF','#FFD166','#8FD694','#BFA6CC'];
+    var colors=['#FF6FA5','#FF9EC8','#FFD166','#8FD694','#BFA6CC'];
     for(var i=0;i<36;i++){
       var e=document.createElement('i');
       e.style.cssText='left:'+(Math.random()*100)+'%;background:'+colors[Math.floor(Math.random()*colors.length)]+';animation-duration:'+(2+Math.random()*2.5)+'s;animation-delay:'+(Math.random()*.6)+'s;';
@@ -344,6 +378,9 @@ body::before{
     noCount++;
     var idx=(noCount-1)%noHints.length;
     noHint.textContent=noHints[idx];
+    /* 文字随点击次数逐次下移，最多 5 次（约 70px） */
+    var shift=Math.min(noCount,5)*14;
+    noHint.style.marginTop=(10+shift)+'px';
     /* NO 每次缩 15%，最小到 0.25 */
     noScale=Math.max(noScale*0.85,0.25);
     noBtn.style.transform='scale('+noScale+')';
@@ -467,7 +504,7 @@ body::before{
     sendBtn.disabled=false;sendBtn.style.display='';sendBtn.textContent='就这样约了！💌';
     noBtn.style.transform='';noBtn.textContent='No';
     yesBtn.style.transform='';
-    noHint.textContent='你确定吗？';noCount=0;
+    noHint.textContent='你确定吗？';noHint.style.marginTop='';noCount=0;
     noScale=1;yesScale=1;
     show('s1');
   };
