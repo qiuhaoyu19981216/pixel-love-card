@@ -102,16 +102,16 @@ body::before{
   image-rendering:pixelated;
 }
 .pbtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(199,62,110,.35);}
-.pbtn-yes{font-family:"Press Start 2P",monospace;font-size:20px;padding:16px 44px;transform:scale(1);transition:transform .25s ease,font-size .25s ease,padding .25s ease;}
+.pbtn-yes{font-family:"Press Start 2P",monospace;transform:scale(1);transition:transform .25s ease;}
 .pbtn-no{
   background:var(--pink-light);color:var(--pink-darker);
-  font-size:14px;padding:8px 18px;
+  font-family:"Press Start 2P",monospace;
   position:relative;
   transform:scale(1);
-  transition:transform .25s ease,padding .25s ease,font-size .25s ease;
+  transition:transform .25s ease;
 }
-.btn-wrap{margin-top:20px;display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap;min-height:56px;}
-.no-hint{font-size:12px;color:var(--pink-mid);margin-top:10px;min-height:18px;}
+.btn-wrap{display:flex;gap:16px;justify-content:center;margin-top:20px;}
+.no-hint{font-size:12px;color:var(--pink-mid);margin-top:10px;min-height:18px;text-align:center;}
 
 /* 活动选择网格 */
 .act-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px;}
@@ -336,25 +336,18 @@ body::before{
   var noBtn=document.getElementById('noBtn');
   var yesBtn=document.getElementById('yesBtn');
   var noHint=document.getElementById('noHint');
-  var noHints=['你确定吗？','宝贝拜托 :C','还是选好啦！','不要这样啦','我要哭了……'];
-  var noCount=0;
   var noScale=1,yesScale=1;
-  var noFontSize=14,yesFontSize=20;
-  var noPadX=18,yesPadX=44;
-  var noPadY=8,yesPadY=16;
 
-  noBtn.addEventListener('pointerover',function(e){if(e.pointerType!=='touch')noEvade();});
-  noBtn.addEventListener('touchstart',function(e){e.preventDefault();noEvade();},{passive:false});
   noBtn.addEventListener('click',function(e){e.preventDefault();noEvade();});
 
   function noEvade(){
     noCount++;
     var idx=(noCount-1)%noHints.length;
     noHint.textContent=noHints[idx];
-    /* NO 越来越小，每次缩 20%，最小到 0.25 */
-    noScale=Math.max(noScale*0.8,0.25);
+    /* NO 每次缩 15%，最小到 0.25 */
+    noScale=Math.max(noScale*0.85,0.25);
     noBtn.style.transform='scale('+noScale+')';
-    /* YES 越来越大，每次增 15%，最大到 1.8 */
+    /* YES 每次增 15%，最大到 1.8 */
     yesScale=Math.min(yesScale*1.15,1.8);
     yesBtn.style.transform='scale('+yesScale+')';
   }
