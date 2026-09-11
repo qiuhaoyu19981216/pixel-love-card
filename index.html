@@ -8,12 +8,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap');
 
 :root{
-  --pink-bg:#FFF1F6;
-  --pink-bg2:#FFD4E9;
-  --pink-dark:#FF6FA5;
-  --pink-darker:#F43E8C;
-  --pink-mid:#FF9EC8;
-  --pink-light:#FFD2E4;
+  --pink-bg:#FFDCEA;
+  --pink-bg2:#FFC2DD;
+  --pink-dark:#FF5C9B;
+  --pink-darker:#E6307E;
+  --pink-mid:#FF8FB9;
+  --pink-light:#FFC9DE;
   --ink:#7A2E57;
   --ink-soft:#C48BA6;
   --white:#FFF9FB;
@@ -21,7 +21,7 @@
   --win-blue:#FF7DB0;
   --win-blue-dark:#E86FA0;
   --win-title:#FF5E9E;
-  --pixel-shadow:3px 3px 0 rgba(244,62,140,.18);
+  --pixel-shadow:3px 3px 0 rgba(230,30,120,.20);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -43,11 +43,11 @@ body::before{
 
 /* 像素花朵/爱心装饰 */
 .deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.deco span{position:absolute;font-size:14px;opacity:.45;animation:floatUp linear infinite;}
+.deco span{position:absolute;font-size:14px;opacity:.5;animation:floatUp linear infinite;}
 @keyframes floatUp{
   0%{transform:translateY(100vh) rotate(0);opacity:0;}
-  10%{opacity:.5;}
-  90%{opacity:.3;}
+  10%{opacity:.6;}
+  90%{opacity:.4;}
   100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}
 }
 
@@ -58,10 +58,10 @@ body::before{
 }
 .card{
   background:var(--white);
-  border:4px solid var(--pink-dark);
+  border:none;
   border-radius:0;
-  padding:28px 22px;
-  box-shadow:var(--pixel-shadow);
+  padding:30px 24px;
+  box-shadow:0 8px 28px rgba(230,126,166,.18);
   width:100%;max-width:380px;
   position:relative;
   animation:popIn .4s steps(4) both;
@@ -110,23 +110,33 @@ body::before{
   display:inline-flex;align-items:center;justify-content:center;gap:4px;
   border:3px solid var(--pink-darker);
   background:var(--pink-dark);color:var(--white);
-  font-family:inherit;font-size:18px;font-weight:bold;
-  padding:12px 32px;cursor:pointer;
+  font-family:inherit;font-size:22px;font-weight:bold;
+  padding:16px 42px;cursor:pointer;
   box-shadow:var(--pixel-shadow);
   border-radius:0;
   transition:transform .1s steps(2),box-shadow .1s;
   image-rendering:pixelated;
 }
 
-.pbtn-yes{font-family:"Press Start 2P",monospace;transform:scale(1);transition:transform .25s ease;}
+/* YES 按钮：点击后会越变越大，撑满整个屏幕 */
+.pbtn-yes{
+  font-family:"Press Start 2P",monospace;
+  position:fixed;left:50%;top:50%;
+  transform:translate(-50%,-50%) scale(1);
+  transform-origin:center center;
+  transition:transform .45s ease,width .45s ease,height .45s ease,font-size .45s ease;
+  z-index:10;
+  margin:0;
+}
 .pbtn-no{
   background:var(--pink-light);color:var(--pink-darker);
   font-family:"Press Start 2P",monospace;
   position:relative;
   transform:scale(1);
   transition:transform .25s ease;
+  padding:16px 30px;font-size:18px;
 }
-.btn-wrap{display:flex;gap:16px;justify-content:center;margin-top:20px;}
+.btn-wrap{display:flex;gap:16px;justify-content:center;margin-top:24px;align-items:center;}
 .no-hint{font-size:12px;color:var(--pink-mid);margin-top:10px;min-height:18px;text-align:center;}
 
 /* 活动选择网格 */
@@ -316,11 +326,11 @@ body::before{
   /* 装饰飘落 */
   (function(){
     var box=document.getElementById('deco');
-    var icons=['💕','🌸','✿','💗','🐾','❀'];
-    for(var i=0;i<12;i++){
+    var icons=['💕','💗','💖','🌸','💘','💓','✿','💞','🐾','❀'];
+    for(var i=0;i<30;i++){
       var s=document.createElement('span');
       s.textContent=icons[Math.floor(Math.random()*icons.length)];
-      s.style.cssText='left:'+(Math.random()*100)+'%;animation-duration:'+(8+Math.random()*8)+'s;animation-delay:'+(Math.random()*10)+'s;font-size:'+(10+Math.random()*8)+'px;';
+      s.style.cssText='left:'+(Math.random()*100)+'%;animation-duration:'+(7+Math.random()*8)+'s;animation-delay:'+(Math.random()*12)+'s;font-size:'+(12+Math.random()*10)+'px;';
       box.appendChild(s);
     }
   })();
@@ -357,9 +367,13 @@ body::before{
     /* NO 每次缩 15%，最小到 0.25 */
     noScale=Math.max(noScale*0.85,0.25);
     noBtn.style.transform='scale('+noScale+')';
-    /* YES 每次增 15%，最大到 1.8 */
-    yesScale=Math.min(yesScale*1.15,1.8);
-    yesBtn.style.transform='scale('+yesScale+')';
+    /* YES 每次增 30%，可以一直变大直到满屏甚至超出 */
+    yesScale=yesScale*1.3;
+    yesBtn.style.transform='translate(-50%,-50%) scale('+yesScale+')';
+    /* YES 满屏后提示语变化 */
+    if(noCount>=8){
+      noHint.textContent='好啦好啦，快按 YES 啦 ❤';
+    }
   }
 
   /* ---- 2 成功页 ---- */
@@ -476,7 +490,7 @@ body::before{
     sendStatus.className='send-status';sendStatus.innerHTML='';
     sendBtn.disabled=false;sendBtn.style.display='';sendBtn.textContent='就这样约了！💌';
     noBtn.style.transform='';noBtn.textContent='No';
-    yesBtn.style.transform='';
+    yesBtn.style.transform='translate(-50%,-50%) scale(1)';
     noHint.textContent='你确定吗？';noHint.style.marginTop='';noCount=0;
     noScale=1;yesScale=1;
     show('s1');
