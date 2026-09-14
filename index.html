@@ -1,144 +1,200 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Love Card</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, sans-serif;
-        }
-        body {
-            min-height: 100vh;
-            background: #111;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        #hearts {
-            position: fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            pointer-events:none;
-            z-index:1;
-        }
-        .heart {
-            position: absolute;
-            font-size: 28px;
-            animation: fall linear forwards;
-        }
-        @keyframes fall {
-            0% {transform: translateY(-50px); opacity:1;}
-            100% {transform: translateY(100vh); opacity:0;}
-        }
-        .card {
-            position: relative;
-            z-index: 2;
-            background: #fff;
-            padding:40px 30px;
-            border-radius: 20px;
-            text-align:center;
-            max-width: 420px;
-            box-shadow: 0 0 30px #ff77aa77;
-        }
-        .card h2 {
-            color:#222;
-            margin-bottom:20px;
-        }
-        .card p {
-            color:#444;
-            margin-bottom:30px;
-            font-size:18px;
-        }
-        .btn-group {
-            display:flex;
-            gap:20px;
-            justify-content:center;
-        }
-        button {
-            padding:12px 30px;
-            font-size:18px;
-            border:none;
-            border-radius: 12px;
-            cursor:pointer;
-            transition:0.2s;
-        }
-        #yes {
-            background:#ff5b8c;
-            color:white;
-        }
-        #no {
-            background:#888;
-            color:white;
-            position:relative;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>情人节像素卡片</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap');
+:root{
+  --pink-bg:#FFDCEA;
+  --pink-bg2:#FFC2DD;
+  --pink-dark:#FF5C9B;
+  --pink-darker:#E6307E;
+  --pink-mid:#FF8FB9;
+  --pink-light:#FFC9DE;
+  --ink:#7A2E57;
+  --ink-soft:#C48BA6;
+  --white:#FFF9FB;
+  --win-gray:#F6EAF1;
+  --win-blue:#FF7DB0;
+  --win-blue-dark:#E86FA0;
+  --win-title:#FF5E9E;
+  --pixel-shadow:3px 3px 0 rgba(230,30,120,.20);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:"ZCOOL KuaiLe","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  background:linear-gradient(180deg,var(--pink-bg) 0%,var(--pink-bg2) 100%);
+  color:var(--ink);
+  overflow:hidden;
+  image-rendering:pixelated;
+  -webkit-font-smoothing:none;
+}
+/* 像素格子背景纹理 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+}
+/* 像素花朵/爱心装饰 */
+.deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.deco span{position:absolute;font-size:14px;opacity:.5;animation:floatUp linear infinite;}
+@keyframes floatUp{
+  0%{transform:translateY(100vh) rotate(0);opacity:0;}
+  10%{opacity:.6;}
+  90%{opacity:.4;}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}
+}
+.screen{
+  position:relative;z-index:1;height:100%;width:100%;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  padding:20px 16px;text-align:center;
+}
+.card{
+  background:transparent;
+  border:none;
+  border-radius:0;
+  padding:30px 24px;
+  box-shadow:none;
+  width:100%;max-width:380px;
+  position:relative;
+  animation:popIn .4s steps(4) both;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:none;}}
+/* 像素画框 */
+.pixel-frame{
+  width:180px;height:150px;margin:0 auto 16px;
+  border:4px solid var(--pink-dark);
+  background:linear-gradient(135deg,#FFF5F9,#FFE0EE);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  box-shadow:var(--pixel-shadow);
+  overflow:hidden;
+}
+.pixel-frame::before,.pixel-frame::after{
+  content:"✿";position:absolute;font-size:18px;color:var(--pink-mid);z-index:2;
+}
+.pixel-frame::before{top:-10px;left:-10px;}
+.pixel-frame::after{bottom:-10px;right:-10px;}
+/* 可爱的 GIF 动图 */
+.gif-img{
+  max-width:96%;max-height:96%;
+  object-fit:contain;
+  mix-blend-mode:multiply;   /* 白底变透明，融入粉色背景 */
+  image-rendering:auto;
+  animation:gifFloat 2.6s ease-in-out infinite;
+}
+@keyframes gifFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+/* 懒蛋蛋(横向)与期待(方形)尺寸微调 */
+#s1 .gif-img{width:158px;}
+#s2 .gif-img{width:128px;}
+#s3 .gif-img{width:150px;}
+#s4 .gif-img{width:128px;}
+.title{font-size:22px;font-weight:bold;color:var(--pink-darker);line-height:1.5;margin-bottom:4px;}
+.subtitle{font-size:14px;color:var(--ink-soft);margin-top:6px;}
+/* 像素按钮 */
+.pbtn{
+  display:inline-flex;align-items:center;justify-content:center;gap:4px;
+  border:3px solid var(--pink-darker);
+  background:var(--pink-dark);color:var(--white);
+  font-family:inherit;font-size:22px;font-weight:bold;
+  padding:16px 42px;cursor:pointer;
+  box-shadow:var(--pixel-shadow);
+  border-radius:0;
+  transition:transform .1s steps(2),box-shadow .1s;
+  image-rendering:pixelated;
+}
+/* YES 按钮：点击后会越变越大，撑满整个屏幕 */
+.pbtn-yes{
+  font-family:"Press Start 2P",monospace;
+  position:relative;
+  transform:scale(1);
+  transform-origin:center center;
+  transition:transform .45s ease,width .45s ease,height .45s ease,font-size .45s ease;
+  z-index:10;
+  margin:0;
+}
+.pbtn-no{
+  background:var(--pink-light);color:var(--pink-darker);
+  font-family:"Press Start 2P",monospace;
+  position:relative;
+  transform:scale(1);
+  transition:transform .25s ease;
+  padding:16px 30px;font-size:18px;
+}
+.btn-wrap{display:flex;flex-direction:row;gap:34px;justify-content:center;margin-top:24px;align-items:center;}
+.no-hint{font-size:18px;color:var(--pink-darker);margin-top:14px;min-height:24px;text-align:center;font-weight:bold;}
+/* 活动选择网格 */
+.act-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px;}
+.act-opt.sel{border-color:var(--pink-darker);background:var(--pink-light);box-shadow:var(--pixel-shadow);}
+.act-opt .ico{font-size:22px;}
+.act-opt .nm{font-size:15px;color:var(--ink);font-weight:bold;}
+.act-opt.sel .nm{color:var(--pink-darker);}
+.act-opt.sel .ico{transform:scale(1.2);}
+.lock-btn .lock-icon{margin-left:4px;}
+/* 日期输入 */
+.date-wrap{position:relative;}
+.date-input{
+  border:3px solid var(--pink-darker);background:var(--white);
+  padding:10px 14px;margin:16px auto 0;width:100%;max-width:260px;
+  display:flex;align-items:center;gap:8px;
+}
+.date-input input{border:none;outline:none;font-size:16px;color:var(--pink-darker);width:100%;background:transparent;font-family:inherit;}
+.cal{
+  position:absolute;left:0;right:0;top:calc(100% + 6px);
+  background:var(--white);border:3px solid var(--pink-darker);
+  box-shadow:var(--pixel-shadow);padding:12px;z-index:5;
+}
+.cal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.cal-hd b{font-size:14px;color:var(--pink-darker);}
+.cal-arrow{width:26px;height:26px;border:2px solid var(--pink-mid);background:var(--pink-light);color:var(--pink-darker);font-size:14px;cursor:pointer;border-radius:0;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;}
+.cal-grid span{font-size:11px;color:var(--ink-soft);padding:4px 0;}
+.cal-grid button{border:none;background:none;font-size:13px;padding:6px 0;cursor:pointer;color:var(--ink);font-family:inherit;border-radius:0;}
+.cal-grid button.today{color:var(--pink-darker);font-weight:bold;}
+.cal-grid button.pick{background:var(--pink-dark);color:#fff;font-weight:bold;}
+/* 复古窗口情书 */
+.win95{
+  background:#F6EAF1;
+  border:3px solid var(--win-blue-dark);
+  box-shadow:var(--pixel-shadow);
+  width:100%;max-width:380px;
+  margin:0 auto;
+}
+.win95-title{
+  background:linear-gradient(90deg,var(--win-title),var(--win-blue));
+  color:#fff;padding:6px 10px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:14px;font-weight:bold;
+}
+.win95-title .heart{margin-right:6px;}
+.win95-close{
+  width:20px;height:20px;background:#E0444B;border:1px solid #fff;
+  color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border-radius:0;
+}
+.win95-body p{margin-bottom:14px;}
+.win95-body b{font-size:17px;color:var(--pink-darker);}
+.win95-sign{text-align:right;margin-top:10px;font-style:italic;}
+.win95-body .cursor{display:inline-block;width:10px;height:16px;background:var(--pink-darker);animation:blink 1s steps(2) infinite;vertical-align:text-bottom;}
+@keyframes blink{50%{opacity:0;}}
+.pbtn-send{width:100%;margin-top:16px;}
+.send-status{margin-top:12px;font-size:14px;line-height:1.6;}
+.send-ok{color:#2E7D5B;font-weight:bold;}
+.send-fail{color:#C44;}
+.send-fail a{color:#C44;font-weight:bold;word-break:break-all;}
+.replay{display:block;margin:16px auto 0;font-size:13px;color:var(--pink-mid);border:none;background:none;cursor:pointer;text-decoration:underline;}
+/* 成功页大字 */
+.yay{font-size:40px;font-weight:bold;color:var(--pink-darker);margin:10px 0;}
+.yay::before,.yay::after{content:"❀";font-size:16px;color:var(--pink-mid);margin:0 8px;vertical-align:middle;}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden;}
+.confetti i{position:absolute;top:-10px;width:10px;height:16px;animation:confFall linear forwards;}
+@keyframes confFall{0%{transform:translateY(-10vh) rotate(0);opacity:1;}100%{transform:translateY(108vh) rotate(720deg);opacity:0;}}
+</style>
 </head>
 <body>
-    <div id="hearts"></div>
-    <div class="card">
-        <h2>要不要和我一起？</h2>
-        <p>我有话想对你说❤️</p >
-        <div class="btn-group">
-            <button id="yes">Yes</button>
-            <button id="no">No</button>
-        </div>
-    </div>
-
-<script>
-//爱心飘落效果
-setInterval(()=>{
-    const h=document.createElement("div");
-    h.className="heart";
-    h.textContent=["💗","💖","💘","💕"][Math.floor(Math.random()*4)];
-    h.style.animationDuration=4+Math.random()*4+"s";
-    document.getElementById("hearts").appendChild(h);
-    setTimeout(()=>h.remove(),8000);
-},260);
-
-const yesBtn = document.querySelector("#yes");
-const noBtn = document.querySelector("#no");
-const receiveEmail = "qiugaokaojiayou@163.com";
-
-// YES按钮：提交信息 + 弹窗
-yesBtn.addEventListener("click",async ()=>{
-  try{
-    await fetch(`https://formsubmit.co/ajax/${receiveEmail}`,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ result:"对方点击 YES，愿意❤️" })
-    });
-  }catch(e){
-    console.log("发送失败",e)
-  }
-  alert("太棒啦！❤️");
-})
-
-// NO按钮：鼠标悬浮乱跑 + 提交信息 +弹窗
-noBtn.addEventListener("mouseenter",()=>{
-    const w = window.innerWidth - 120;
-    const h = window.innerHeight - 80;
-    noBtn.style.left = Math.random()*w + "px";
-    noBtn.style.top = Math.random()*h + "px";
-})
-noBtn.addEventListener("click",async ()=>{
-  try{
-    await fetch(`https://formsubmit.co/ajax/${receiveEmail}`,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ result:"对方点击 NO，拒绝💔" })
-    });
-  }catch(e){
-    console.log("发送失败",e)
-  }
-  alert("呜呜，再考虑一下🥺");
-})
-</script>
-</body>
-</html>
+<div class="deco" id="deco"></div>
+<!-- 1 邀请页 -->
+<section class="screen" id="s1">
+  <div class="card">
+    <div class="pixel-frame">...
