@@ -468,7 +468,7 @@ body::before{
       sendBtn.style.display='none';confetti();
     }).catch(function(){
       sendStatus.className='send-status send-fail';
-      var mailto='mailto:'+qiugaokaojiayou@163.com+'?subject='+encodeURIComponent('【待确认】她想约'+actSel)+'&body='+encodeURIComponent(txt);
+      var mailto='mailto:'+ qiugaokaojiayou@163.com +'?subject='+encodeURIComponent('【待确认】她想约'+actSel)+'&body='+encodeURIComponent(txt);
       sendStatus.innerHTML='没发送成功，也可以点这里用邮箱发给我 👉 <a href="'+mailto+'">点此发送</a>';
       sendBtn.disabled=false;sendBtn.textContent='再试一次 💌';
     });
